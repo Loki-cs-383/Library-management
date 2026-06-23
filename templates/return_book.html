@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h2>Return Book</h2>
+        <p><strong>Book:</strong> {{ transaction.title }}</p>
+        <p><strong>Member:</strong> {{ transaction.name }}</p>
+        <p><strong>Issue Date:</strong> {{ transaction.issue_date }}</p>
+        <p><strong>Due Date:</strong> {{ transaction.due_date }}</p>
+        <form method="POST" action="{{ url_for('return_book', id=transaction.id) }}">
+            <div class="mb-3">
+                <label for="return_date" class="form-label">Return Date</label>
+                <input type="date" class="form-control" id="return_date" name="return_date" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Return Book</button>
+                <a href="{{ url_for('transactions') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
