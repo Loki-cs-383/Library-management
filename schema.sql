@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS members;
 
 -- Create members table
 CREATE TABLE members (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone VARCHAR(20),
@@ -15,25 +15,25 @@ CREATE TABLE members (
 
 -- Create books table
 CREATE TABLE books (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title VARCHAR(200) NOT NULL,
     author VARCHAR(100) NOT NULL,
     isbn VARCHAR(20) UNIQUE NOT NULL,
-    publication_year YEAR,
-    available_copies INT NOT NULL DEFAULT 1,
-    total_copies INT NOT NULL DEFAULT 1,
+    publication_year INTEGER,
+    available_copies INTEGER NOT NULL DEFAULT 1,
+    total_copies INTEGER NOT NULL DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create transactions table
 CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    book_id INT NOT NULL,
-    member_id INT NOT NULL,
+    id SERIAL PRIMARY KEY,
+    book_id INTEGER NOT NULL,
+    member_id INTEGER NOT NULL,
     issue_date DATE NOT NULL,
     due_date DATE NOT NULL,
     return_date DATE,
-    fine DECIMAL(5,2) DEFAULT 0.00,
+    fine NUMERIC(5,2) DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (book_id) REFERENCES books(id),
     FOREIGN KEY (member_id) REFERENCES members(id)

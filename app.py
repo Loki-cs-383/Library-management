@@ -5,17 +5,27 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Change this in production
 
-# MySQL configuration
+
+# Database configuration using DATABASE_URL (PostgreSQL)
+import os
+import psycopg2
+from urllib.parse import urlparse
+
+DATABASE_URL = os.getenv(\"DATABASE_URL\")
+if not DATABASE_URL:
+    raise Exception(\"DATABASE_URL environment variable not set\")
+result = urlparse(DATABASE_URL)
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '1234',  # Set your MySQL password here
-    'database': 'library',
-    'cursorclass': pymysql.cursors.DictCursor
+    \"dbname\":   result.path[1:],
+    \"user\":     result.username,
+    \"password\": result.password,
+    \"host\":     result.hostname,
+    \"port\":     result.port
 }
 
 def get_db_connection():
-    return pymysql.connect(**db_config)
+    return psycopg2.connect(**db_config)
+
 
 # Home page
 @app.route('/')
